@@ -63,9 +63,8 @@ const SignUp = () => {
       localStorage.setItem('token', token);
       localStorage.setItem('userId', user.id);
       // Navigate based on role
-      if (user.role === 'admin') navigate('/admin-dashboard');
-      else if (user.role === 'store-owner') navigate('/store-owner-dashboard');
-      else navigate('/user-dashboard');
+      localStorage.setItem('userData', JSON.stringify(user));
+      navigate('/user-dashboard');
     } catch (error) {
       console.error('Error signing up', error);
     }

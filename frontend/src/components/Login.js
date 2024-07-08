@@ -73,7 +73,7 @@ const SignIn = () => {
         url = 'http://localhost:5000/store/login';
       } 
       else if (role === 'admin') {
-        url = 'http://localhost:5000/admin/login';
+        url = 'http://localhost:5000/auth/login';
       }
       const response = await axios.post(url, { email, password, role });
 
@@ -83,8 +83,10 @@ const SignIn = () => {
       localStorage.setItem('userId', user.id);
       
       // Navigate based on role
-      if (user.role === 'admin') navigate('/admin-dashboard');
-
+      if (user.role === 'admin') {
+        localStorage.setItem('userData', JSON.stringify(user));
+        navigate('/admin-dashboard');
+      }
       else if (user.role === 'storeOwner'){ 
         // setStoreOwnerData(response.data.storeOwnerData);
         localStorage.setItem('storeOwnerData', JSON.stringify(response.data.storeOwnerData));
