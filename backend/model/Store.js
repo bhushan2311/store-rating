@@ -24,13 +24,18 @@ const storeSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  role: {
+    type: String,
+    enum: ['normal', 'storeOwner', 'admin'],
+    default: 'storeOwner',
+  },
 });
 
 // Calculate the overall rating before saving the store
 storeSchema.pre('save', function(next) {
   if (this.ratings.length > 0) {
     const totalRating = this.ratings.reduce((sum, rating) => sum + rating.score, 0);
-    this.overallRating = totalRating / this.ratings.length;
+    this.overallRating = Math.round(totalRating / this.ratings.length);
   } else {
     this.overallRating = 0;
   }

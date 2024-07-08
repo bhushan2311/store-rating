@@ -5,8 +5,8 @@ const JWT_SECRET = "thetaskisbeinginprocess";
 
 // ------------- Register user
 exports.registerUser = async (req, res) => {
-  const { name, email, address, password } = req.body;
-
+  const { name, email, address, password,role } = req.body;
+  console.log(req.body);
   try {
     const userExists = await User.findOne({ email });
 
@@ -23,6 +23,7 @@ exports.registerUser = async (req, res) => {
       email,
       address,
       password: pass,
+      role
     });
 
     await user.save();
@@ -37,6 +38,7 @@ exports.registerUser = async (req, res) => {
         email: user.email,
         role: user.role,
       },
+      message:"User added Successfully!!"
     });
   } catch (error) {
     res.status(500).json({ message: "Server error",error });
@@ -51,7 +53,10 @@ exports.loginUser = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(400).json({ message: "Invalid credentials" });
+      return res.status(400).json({
+        success: "false",
+        error: "Please try to login with correct credentials",
+      });
     }
 
     const passCompare = await bcrypt.compare(password, user.password);
@@ -73,6 +78,7 @@ exports.loginUser = async (req, res) => {
         id: user._id,
         name: user.name,
         email: user.email,
+        address: user.address,
         role: user.role,
       },
     });
