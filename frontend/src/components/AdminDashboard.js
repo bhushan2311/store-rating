@@ -307,7 +307,7 @@ const AdminDashboard = () => {
           <Select value={roleFilter} onChange={handleRoleFilter}>
             <option value="">All Roles</option>
             <option value="admin">Admin</option>
-            <option value="user">User</option>
+            <option value="normal">User</option>
             <option value="storeOwner">Store Owner</option>
           </Select>
         </FilterBar>

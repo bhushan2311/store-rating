@@ -112,7 +112,7 @@ const UserDashboard = () => {
 
       const storesWithUserRatings = storesData.map((store) => {
         const userRatingObj = store.ratings.find(
-          (rating) => rating.user._id === currentUserId
+          (rating) => rating.user && rating.user._id === currentUserId
         );
         const userRating = userRatingObj ? userRatingObj.score : null;
         return { ...store, userRating };
